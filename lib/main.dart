@@ -10,12 +10,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Dicer',
       theme: ThemeData(
         primarySwatch: Colors.blueGrey,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Dicer'),
     );
   }
 }
@@ -30,12 +30,18 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  int d20aResult = 10;
+  int d20bResult = 10;
 
-  int d20Result = 10;
-
-  void changeD20Result(){
+  void changeD20aResult() {
     setState(() {
-      this.d20Result = 1 + Random().nextInt(19);
+      this.d20aResult = 1 + Random().nextInt(19);
+    });
+  }
+
+  void changeD20bResult() {
+    setState(() {
+      this.d20bResult = 1 + Random().nextInt(5);
     });
   }
 
@@ -53,7 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
               color: Colors.blueGrey,
               child: InkWell(
                 splashColor: Colors.blue.withAlpha(30),
-                onTap: changeD20Result,
+                onTap: changeD20aResult,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -62,7 +68,27 @@ class _MyHomePageState extends State<MyHomePage> {
                       child: Text('D20'),
                     ),
                     Text(
-                      '${this.d20Result}',
+                      '${this.d20aResult}',
+                      style: TextStyle(fontSize: 48),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Card(
+              color: Colors.blueGrey,
+              child: InkWell(
+                splashColor: Colors.blue.withAlpha(30),
+                onTap: changeD20bResult,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Container(
+                      width: 300,
+                      child: Text('D6'),
+                    ),
+                    Text(
+                      '${this.d20bResult}',
                       style: TextStyle(fontSize: 48),
                     ),
                   ],
@@ -72,11 +98,24 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
+      bottomNavigationBar: BottomAppBar(
+        shape: const CircularNotchedRectangle(),
+        child: Container(
+          height: 50.0,
+          child: Text(
+            "Total: ${this.d20aResult + this.d20bResult}",
+          ),
+        ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          changeD20aResult();
+          changeD20bResult();
+        },
+        tooltip: 'Increment',
+        child: Icon(Icons.autorenew),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

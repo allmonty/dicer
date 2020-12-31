@@ -1,6 +1,7 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
+
+import './dice/dice.dart';
 
 void main() {
   runApp(MyApp());
@@ -55,46 +56,8 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Card(
-              color: Colors.blueGrey,
-              child: InkWell(
-                splashColor: Colors.blue.withAlpha(30),
-                onTap: changeD20aResult,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Container(
-                      width: 300,
-                      child: Text('D20'),
-                    ),
-                    Text(
-                      '${this.d20aResult}',
-                      style: TextStyle(fontSize: 48),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Card(
-              color: Colors.blueGrey,
-              child: InkWell(
-                splashColor: Colors.blue.withAlpha(30),
-                onTap: changeD20bResult,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Container(
-                      width: 300,
-                      child: Text('D6'),
-                    ),
-                    Text(
-                      '${this.d20bResult}',
-                      style: TextStyle(fontSize: 48),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            Dice(diceSize: 20),
+            Dice(diceSize: 6),
           ],
         ),
       ),

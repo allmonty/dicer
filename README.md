@@ -15,4 +15,6 @@ To run the app simply run `flutter run`.
 - [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
 - [Flutter simple app state management](https://flutter.dev/docs/development/data-and-backend/state-mgmt/simple)
 - [Pragmatic State Management in Flutter](https://www.youtube.com/watch?v=d_m5csmrf7I)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+- [WidgetView Pattern](https://blog.gskinner.com/archives/2020/02/flutter-widgetview-a-simple-separation-of-layout-and-logic.html)
+- [Unit Testing](https://flutter.dev/docs/cookbook/testing/unit/introduction)
+- [Integration Testing](https://flutter.dev/docs/cookbook/testing/integration/introduction)

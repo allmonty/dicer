@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
-class DiceView extends StatelessWidget {
-  final state;
-  const DiceView(this.state, {Key key}) : super(key: key);
+class Dice extends StatelessWidget {
+  const Dice({Key key, this.size, this.result, this.onTap}) : super(key: key);
+
+  final int size;
+  final int result;
+  final Function onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -10,20 +13,15 @@ class DiceView extends StatelessWidget {
       color: Colors.blueGrey,
       child: InkWell(
         splashColor: Colors.purple.withAlpha(50),
-        onTap: state.roll,
+        onTap: onTap,
         child: Container(
           width: 150,
           height: 150,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text(
-                'D${state.widget.diceSize}',
-              ),
-              Text(
-                '${state.result}',
-                style: TextStyle(fontSize: 72),
-              ),
+              Text('D$size'),
+              Text('$result', style: TextStyle(fontSize: 72)),
             ],
           ),
         ),

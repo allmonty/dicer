@@ -1,21 +1,18 @@
+import 'package:flutter/material.dart';
 import 'dart:collection';
 
-import 'package:flutter/material.dart';
-
-import './dice/dice.dart';
+import 'dice_model.dart';
 
 class BoardModel extends ChangeNotifier {
   /// Internal, private state of the cart.
-  final List<Dice> _items = [
-    Dice(diceSize: 20),
-    Dice(diceSize: 12),
-    Dice(diceSize: 6),
-  ];
+  final List<DiceModel> _items = [];
 
-  UnmodifiableListView<Dice> get items => UnmodifiableListView(_items);
+  UnmodifiableListView<DiceModel> get items => UnmodifiableListView(_items);
 
-  void add(Dice item) {
-    _items.add(item);
+  int get total => _items.fold(0, (total, dice) => total += dice.result);
+
+  void add(int size) {
+    _items.add(DiceModel(size));
     notifyListeners();
   }
 }

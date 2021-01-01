@@ -109,9 +109,9 @@ class AddButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
-      onPressed: () => Provider.of<BoardModel>(context, listen: false).add(Random().nextInt(30)),
+      onPressed: () => Provider.of<BoardModel>(context, listen: false).rerollAll(),
       tooltip: 'Increment',
-      child: Icon(Icons.add),
+      child: Icon(Icons.autorenew),
     );
   }
 }

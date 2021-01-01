@@ -9,20 +9,23 @@ class DiceView extends StatelessWidget {
     return Card(
       color: Colors.blueGrey,
       child: InkWell(
-        splashColor: Colors.blue.withAlpha(30),
+        splashColor: Colors.purple.withAlpha(50),
         onTap: state.roll,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              width: 300,
-              child: Text('D${state.widget.diceSize}'),
-            ),
-            Text(
-              '${state.result}',
-              style: TextStyle(fontSize: 48),
-            ),
-          ],
+        child: Container(
+          width: 150,
+          height: 150,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                'D${state.widget.diceSize}',
+              ),
+              Text(
+                '${state.result}',
+                style: TextStyle(fontSize: 72),
+              ),
+            ],
+          ),
         ),
       ),
     );

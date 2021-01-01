@@ -13,7 +13,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Dicer',
       theme: ThemeData(
-        primarySwatch: Colors.blueGrey,
+        brightness: Brightness.dark,
+        primarySwatch: Colors.green,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: MyHomePage(title: 'Dicer'),
@@ -53,10 +54,16 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: GridView.count(
+          crossAxisCount: 3,
           children: <Widget>[
             Dice(diceSize: 20),
+            Dice(diceSize: 6),
+            Dice(diceSize: 6),
+            Dice(diceSize: 6),
+            Dice(diceSize: 6),
+            Dice(diceSize: 6),
+            Dice(diceSize: 6),
             Dice(diceSize: 6),
           ],
         ),

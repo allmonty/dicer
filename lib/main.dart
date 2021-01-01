@@ -1,7 +1,9 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import './dice/dice.dart';
+import './board_model.dart';
 
 void main() {
   runApp(MyApp());
@@ -32,60 +34,62 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int d20aResult = 10;
-  int d20bResult = 10;
-
-  void changeD20aResult() {
-    setState(() {
-      this.d20aResult = 1 + Random().nextInt(19);
-    });
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (context) => BoardModel(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(widget.title),
+        ),
+        body: Center(
+          child: DicesBoard(),
+        ),
+        bottomNavigationBar: BottomAppBar(
+          shape: const CircularNotchedRectangle(),
+          child: Container(
+            height: 50.0,
+            child: Text(
+              "",
+            ),
+          ),
+        ),
+        floatingActionButton: AddButton(),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      ),
+    );
   }
+}
 
-  void changeD20bResult() {
-    setState(() {
-      this.d20bResult = 1 + Random().nextInt(5);
-    });
-  }
+class DicesBoard extends StatelessWidget {
+  const DicesBoard({
+    Key key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: GridView.count(
+    return Consumer<BoardModel>(
+      builder: (context, board, _) {
+        return GridView.count(
           crossAxisCount: 3,
-          children: <Widget>[
-            Dice(diceSize: 20),
-            Dice(diceSize: 6),
-            Dice(diceSize: 6),
-            Dice(diceSize: 6),
-            Dice(diceSize: 6),
-            Dice(diceSize: 6),
-            Dice(diceSize: 6),
-            Dice(diceSize: 6),
-          ],
-        ),
-      ),
-      bottomNavigationBar: BottomAppBar(
-        shape: const CircularNotchedRectangle(),
-        child: Container(
-          height: 50.0,
-          child: Text(
-            "Total: ${this.d20aResult + this.d20bResult}",
-          ),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          changeD20aResult();
-          changeD20bResult();
-        },
-        tooltip: 'Increment',
-        child: Icon(Icons.autorenew),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+          children: board.items,
+        );
+      },
+    );
+  }
+}
+
+class AddButton extends StatelessWidget {
+  const AddButton({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton(
+      onPressed: () => Provider.of<BoardModel>(context, listen: false).add(Dice(diceSize: 2)),
+      tooltip: 'Increment',
+      child: Icon(Icons.autorenew),
     );
   }
 }

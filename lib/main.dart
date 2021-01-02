@@ -33,6 +33,7 @@ class MyHomePage extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => ResultModel()),
       ],
       child: Scaffold(
+        extendBody: true,
         appBar: AppBar(
           title: BoardResult(),
         ),
@@ -43,8 +44,12 @@ class MyHomePage extends StatelessWidget {
           shape: const CircularNotchedRectangle(),
           child: new Row(
             mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
+              IconButton(
+                icon: Icon(Icons.remove),
+                onPressed: () {},
+              ),
               IconButton(
                 icon: Icon(Icons.add),
                 onPressed: () {},

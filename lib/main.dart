@@ -44,7 +44,7 @@ class MyHomePage extends StatelessWidget {
             child: BoardResult(),
           ),
         ),
-        floatingActionButton: AddButton(),
+        floatingActionButton: RerollBoardButton(),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       ),
     );
@@ -64,10 +64,6 @@ void reroll(DiceModel dice, ResultModel result) {
 }
 
 class BoardResult extends StatelessWidget {
-  const BoardResult({
-    Key key,
-  }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Text(
@@ -78,10 +74,6 @@ class BoardResult extends StatelessWidget {
 }
 
 class DicesBoard extends StatelessWidget {
-  const DicesBoard({
-    Key key,
-  }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Consumer<BoardModel>(
@@ -109,11 +101,7 @@ class DicesBoard extends StatelessWidget {
   }
 }
 
-class AddButton extends StatelessWidget {
-  const AddButton({
-    Key key,
-  }) : super(key: key);
-
+class RerollBoardButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
@@ -121,7 +109,7 @@ class AddButton extends StatelessWidget {
         Provider.of<BoardModel>(context, listen: false),
         Provider.of<ResultModel>(context, listen: false),
       ),
-      tooltip: 'Increment',
+      tooltip: 'Reroll',
       child: Icon(Icons.autorenew),
     );
   }

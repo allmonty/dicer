@@ -14,15 +14,16 @@ class Dice extends StatelessWidget {
       child: InkWell(
         splashColor: Colors.purple.withAlpha(50),
         onTap: onTap,
-        child: Container(
-          width: 150,
-          height: 150,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text('D$size'),
-              Text('$result', style: TextStyle(fontSize: 72)),
-            ],
+        child: AspectRatio(
+          aspectRatio: 1,
+          child: Container(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text('D$size'),
+                Text('$result', style: TextStyle(fontSize: 72)),
+              ],
+            ),
           ),
         ),
       ),

@@ -18,3 +18,4 @@ To run the app simply run `flutter run`.
 - [WidgetView Pattern](https://blog.gskinner.com/archives/2020/02/flutter-widgetview-a-simple-separation-of-layout-and-logic.html)
 - [Unit Testing](https://flutter.dev/docs/cookbook/testing/unit/introduction)
 - [Integration Testing](https://flutter.dev/docs/cookbook/testing/integration/introduction)
+- [Bottom App Bar](https://proandroiddev.com/flutter-how-to-using-bottomappbar-75d53426f5af)

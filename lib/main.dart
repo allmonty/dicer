@@ -17,7 +17,6 @@ class MyApp extends StatelessWidget {
       title: 'Dicer',
       theme: ThemeData(
         brightness: Brightness.dark,
-        primarySwatch: Colors.green,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: MyHomePage(),
@@ -34,14 +33,23 @@ class MyHomePage extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => ResultModel()),
       ],
       child: Scaffold(
+        appBar: AppBar(
+          title: BoardResult(),
+        ),
         body: Center(
           child: DicesBoard(),
         ),
         bottomNavigationBar: BottomAppBar(
           shape: const CircularNotchedRectangle(),
-          child: Container(
-            height: 42.0,
-            child: BoardResult(),
+          child: new Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              IconButton(
+                icon: Icon(Icons.add),
+                onPressed: () {},
+              ),
+            ],
           ),
         ),
         floatingActionButton: RerollBoardButton(),
@@ -67,7 +75,7 @@ class BoardResult extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      "Result: ${Provider.of<ResultModel>(context).result}",
+      "Σ ${Provider.of<ResultModel>(context).result}",
       style: TextStyle(fontSize: 30),
     );
   }
@@ -78,23 +86,29 @@ class DicesBoard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<BoardModel>(
       builder: (context, board, _) {
-        return GridView.count(
-          crossAxisCount: 3,
-          children: board.items.map((diceModel) {
-            return ChangeNotifierProvider.value(
-              value: diceModel,
-              child: Consumer<DiceModel>(builder: (context, dice, _) {
-                return Dice(
-                  size: diceModel.size,
-                  result: diceModel.result,
-                  onTap: () => reroll(
-                    diceModel,
-                    Provider.of<ResultModel>(context, listen: false),
-                  ),
-                );
-              }),
-            );
-          }).toList(),
+        return SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
+          child: Wrap(
+            alignment: WrapAlignment.center,
+            children: board.items.map((diceModel) {
+              return ChangeNotifierProvider.value(
+                value: diceModel,
+                child: Consumer<DiceModel>(builder: (context, dice, _) {
+                  return FractionallySizedBox(
+                    widthFactor: 0.33,
+                    child: Dice(
+                      size: diceModel.size,
+                      result: diceModel.result,
+                      onTap: () => reroll(
+                        diceModel,
+                        Provider.of<ResultModel>(context, listen: false),
+                      ),
+                    ),
+                  );
+                }),
+              );
+            }).toList(),
+          ),
         );
       },
     );

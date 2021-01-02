@@ -6,10 +6,19 @@ import 'dice_model.dart';
 class BoardModel extends ChangeNotifier {
   final List<DiceModel> _items = [
     DiceModel(6),
-    DiceModel(8),
-    DiceModel(20),
-    DiceModel(12),
-    DiceModel(100),
+    DiceModel(6),
+    DiceModel(6),
+    DiceModel(6),
+    DiceModel(6),
+    DiceModel(6),
+    DiceModel(6),
+    DiceModel(6),
+    DiceModel(6),
+    DiceModel(6),
+    DiceModel(6),
+    DiceModel(6),
+    DiceModel(6),
+    DiceModel(6),
   ];
 
   UnmodifiableListView<DiceModel> get items => UnmodifiableListView(_items);

@@ -38,7 +38,7 @@ class MyHomePage extends StatelessWidget {
           title: BoardResult(),
         ),
         body: Center(
-          child: DicesBoard(),
+          child: Column(children: [Lala(), DicesBoard()]),
         ),
         bottomNavigationBar: BottomAppBar(
           shape: const CircularNotchedRectangle(),
@@ -52,7 +52,16 @@ class MyHomePage extends StatelessWidget {
               ),
               IconButton(
                 icon: Icon(Icons.add),
-                onPressed: () {},
+                onPressed: () => showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  builder: (BuildContext context) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 18),
+                      child: AddDice(),
+                    );
+                  },
+                ),
               ),
             ],
           ),
@@ -61,6 +70,69 @@ class MyHomePage extends StatelessWidget {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       ),
     );
+  }
+}
+
+class AddDice extends StatelessWidget {
+  const AddDice({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Container(
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 30.0),
+          child: null,
+        ),
+      ),
+    );
+  }
+}
+
+class Lala extends StatelessWidget {
+  const Lala({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 200,
+      height: 150,
+      child: Row(
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        FractionallySizedBox(
+          widthFactor: 0.5,
+          child:
+          // Column(
+          //   mainAxisSize: MainAxisSize.min,
+          //   children: [
+          //     TextFormField(
+          //       initialValue: '6',
+          //       decoration: InputDecoration(icon: Text("D")),
+          //       keyboardType: TextInputType.number,
+          //     ),
+          //     TextFormField(
+          //       initialValue: '1',
+          //       decoration: InputDecoration(icon: Text("#")),
+          //       keyboardType: TextInputType.number,
+          //     ),
+          //   ],
+          // ),
+          Text("add", style: TextStyle(fontSize: 20)),
+        ),
+        // RaisedButton(
+        Text("add", style: TextStyle(fontSize: 20)),
+        // onPressed: (){},
+        // )
+      ],
+    ),);
   }
 }
 

@@ -1,11 +1,10 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'board_model.dart';
 import 'dice.dart';
-import 'dice_model.dart';
+import 'models/result_model.dart';
+import 'models/board_model.dart';
+import 'models/dice_model.dart';
 
 void main() {
   runApp(MyApp());
@@ -29,8 +28,11 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => BoardModel(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => BoardModel()),
+        ChangeNotifierProvider(create: (context) => ResultModel()),
+      ],
       child: Scaffold(
         body: Center(
           child: DicesBoard(),
@@ -49,6 +51,18 @@ class MyHomePage extends StatelessWidget {
   }
 }
 
+void rerollAll(BoardModel board, ResultModel result) {
+  board.items.forEach((element) => element.roll());
+  result.update(board.total);
+}
+
+void reroll(DiceModel dice, ResultModel result) {
+  int oldValue = dice.result;
+  dice.roll();
+  int newResult = result.result - oldValue + dice.result;
+  result.update(newResult);
+}
+
 class BoardResult extends StatelessWidget {
   const BoardResult({
     Key key,
@@ -57,7 +71,7 @@ class BoardResult extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      "Result: ${Provider.of<BoardModel>(context).total}",
+      "Result: ${Provider.of<ResultModel>(context).result}",
       style: TextStyle(fontSize: 30),
     );
   }
@@ -81,7 +95,10 @@ class DicesBoard extends StatelessWidget {
                 return Dice(
                   size: diceModel.size,
                   result: diceModel.result,
-                  onTap: diceModel.roll,
+                  onTap: () => reroll(
+                    diceModel,
+                    Provider.of<ResultModel>(context, listen: false),
+                  ),
                 );
               }),
             );
@@ -100,7 +117,10 @@ class AddButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
-      onPressed: () => Provider.of<BoardModel>(context, listen: false).rerollAll(),
+      onPressed: () => rerollAll(
+        Provider.of<BoardModel>(context, listen: false),
+        Provider.of<ResultModel>(context, listen: false),
+      ),
       tooltip: 'Increment',
       child: Icon(Icons.autorenew),
     );

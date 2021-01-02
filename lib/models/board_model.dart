@@ -4,7 +4,6 @@ import 'dart:collection';
 import 'dice_model.dart';
 
 class BoardModel extends ChangeNotifier {
-  /// Internal, private state of the cart.
   final List<DiceModel> _items = [
     DiceModel(6),
     DiceModel(8),
@@ -20,9 +19,5 @@ class BoardModel extends ChangeNotifier {
   void add(int size) {
     _items.add(DiceModel(size));
     notifyListeners();
-  }
-
-  void rerollAll() {
-    _items.forEach((element) => element.roll());
   }
 }

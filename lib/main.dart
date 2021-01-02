@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'dice.dart';
+import 'floating_modal_bottom_sheet.dart';
+import 'add_dice_form.dart';
 import 'models/result_model.dart';
 import 'models/board_model.dart';
 import 'models/dice_model.dart';
@@ -19,7 +21,13 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.dark,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(),
+      home: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => BoardModel()),
+          ChangeNotifierProvider(create: (context) => ResultModel()),
+        ],
+        child: MyHomePage(),
+      ),
     );
   }
 }
@@ -27,112 +35,44 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => BoardModel()),
-        ChangeNotifierProvider(create: (context) => ResultModel()),
-      ],
-      child: Scaffold(
-        extendBody: true,
-        appBar: AppBar(
-          title: BoardResult(),
-        ),
-        body: Center(
-          child: Column(children: [Lala(), DicesBoard()]),
-        ),
-        bottomNavigationBar: BottomAppBar(
-          shape: const CircularNotchedRectangle(),
-          child: new Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              IconButton(
-                icon: Icon(Icons.remove),
-                onPressed: () {},
-              ),
-              IconButton(
-                icon: Icon(Icons.add),
-                onPressed: () => showModalBottomSheet(
-                  context: context,
-                  isScrollControlled: true,
-                  builder: (BuildContext context) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 18),
-                      child: AddDice(),
-                    );
-                  },
-                ),
-              ),
-            ],
-          ),
-        ),
-        floatingActionButton: RerollBoardButton(),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+    return Scaffold(
+      extendBody: true,
+      appBar: AppBar(
+        title: BoardResult(),
       ),
-    );
-  }
-}
-
-class AddDice extends StatelessWidget {
-  const AddDice({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(
-        padding: EdgeInsets.only(
-          bottom: MediaQuery.of(context).viewInsets.bottom,
-        ),
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 30.0),
-          child: null,
+      body: Center(
+        child: DicesBoard(),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        shape: const CircularNotchedRectangle(),
+        child: new Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            IconButton(
+              icon: Icon(Icons.remove),
+              onPressed: () {},
+            ),
+            IconButton(
+              icon: Icon(Icons.add),
+              onPressed: () => showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                builder: (_) {
+                  return FloatingModalBottomSheet(
+                    child: AddDiceForm(
+                      add: Provider.of<BoardModel>(context, listen: false).add,
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
         ),
       ),
+      floatingActionButton: RerollBoardButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
-  }
-}
-
-class Lala extends StatelessWidget {
-  const Lala({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 200,
-      height: 150,
-      child: Row(
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        FractionallySizedBox(
-          widthFactor: 0.5,
-          child:
-          // Column(
-          //   mainAxisSize: MainAxisSize.min,
-          //   children: [
-          //     TextFormField(
-          //       initialValue: '6',
-          //       decoration: InputDecoration(icon: Text("D")),
-          //       keyboardType: TextInputType.number,
-          //     ),
-          //     TextFormField(
-          //       initialValue: '1',
-          //       decoration: InputDecoration(icon: Text("#")),
-          //       keyboardType: TextInputType.number,
-          //     ),
-          //   ],
-          // ),
-          Text("add", style: TextStyle(fontSize: 20)),
-        ),
-        // RaisedButton(
-        Text("add", style: TextStyle(fontSize: 20)),
-        // onPressed: (){},
-        // )
-      ],
-    ),);
   }
 }
 

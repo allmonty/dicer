@@ -24,7 +24,7 @@ class Dice extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text('D$size'),
-                Text('$result', style: TextStyle(fontSize: 72)),
+                Text('${result > 0 ? result : "-"}', style: TextStyle(fontSize: 72)),
               ],
             ),
           ),

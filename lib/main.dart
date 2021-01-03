@@ -51,7 +51,7 @@ class MyHomePage extends StatelessWidget {
         child: DicesBoard(),
       ),
       floatingActionButton: RerollBoardButton(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }

@@ -53,12 +53,8 @@ class MyHomePage extends StatelessWidget {
         shape: const CircularNotchedRectangle(),
         child: new Row(
           mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.end,
           children: <Widget>[
-            IconButton(
-              icon: Icon(Icons.remove),
-              onPressed: () {},
-            ),
             IconButton(
               icon: Icon(Icons.add),
               onPressed: () => showModalBottomSheet(
@@ -94,6 +90,11 @@ void reroll(DiceModel dice, ResultModel result) {
   result.update(newResult);
 }
 
+void removeDice(DiceModel dice, BoardModel board, ResultModel result) {
+  board.remove(dice);
+  result.update(board.total);
+}
+
 class BoardResult extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -122,6 +123,11 @@ class DicesBoard extends StatelessWidget {
                     child: Dice(
                       size: diceModel.size,
                       result: diceModel.result,
+                      longPress: () => removeDice(
+                        dice,
+                        board,
+                        Provider.of<ResultModel>(context, listen: false),
+                      ),
                       onTap: () => reroll(
                         diceModel,
                         Provider.of<ResultModel>(context, listen: false),

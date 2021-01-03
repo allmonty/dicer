@@ -20,4 +20,9 @@ class BoardModel extends ChangeNotifier {
     
     notifyListeners();
   }
+
+  void remove(DiceModel element) {
+    _items.remove(element);
+    notifyListeners();
+  }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:floating_action_row/floating_action_row.dart';
 
 import 'dice.dart';
 import 'floating_modal_bottom_sheet.dart';
@@ -49,31 +50,8 @@ class MyHomePage extends StatelessWidget {
       body: Center(
         child: DicesBoard(),
       ),
-      bottomNavigationBar: BottomAppBar(
-        shape: const CircularNotchedRectangle(),
-        child: new Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            IconButton(
-              icon: Icon(Icons.add),
-              onPressed: () => showModalBottomSheet(
-                context: context,
-                isScrollControlled: true,
-                builder: (_) {
-                  return FloatingModalBottomSheet(
-                    child: AddDiceForm(
-                      add: Provider.of<BoardModel>(context, listen: false).add,
-                    ),
-                  );
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
       floatingActionButton: RerollBoardButton(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
     );
   }
 }
@@ -147,13 +125,33 @@ class DicesBoard extends StatelessWidget {
 class RerollBoardButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return FloatingActionButton(
-      onPressed: () => rerollAll(
-        Provider.of<BoardModel>(context, listen: false),
-        Provider.of<ResultModel>(context, listen: false),
-      ),
-      tooltip: 'Reroll',
-      child: Icon(Icons.autorenew),
+    return FloatingActionRow(
+      color: Colors.amber,
+      axis: Axis.vertical,
+      children: [
+        FloatingActionRowButton(
+          icon: Icon(Icons.add),
+          onTap: () => showModalBottomSheet(
+            context: context,
+            isScrollControlled: true,
+            builder: (_) {
+              return FloatingModalBottomSheet(
+                child: AddDiceForm(
+                  add: Provider.of<BoardModel>(context, listen: false).add,
+                ),
+              );
+            },
+          ),
+        ),
+        FloatingActionRowDivider(),
+        FloatingActionRowButton(
+          icon: Icon(Icons.autorenew),
+          onTap: () => rerollAll(
+            Provider.of<BoardModel>(context, listen: false),
+            Provider.of<ResultModel>(context, listen: false),
+          ),
+        ),
+      ],
     );
   }
 }

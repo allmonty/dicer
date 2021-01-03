@@ -19,3 +19,5 @@ To run the app simply run `flutter run`.
 - [Unit Testing](https://flutter.dev/docs/cookbook/testing/unit/introduction)
 - [Integration Testing](https://flutter.dev/docs/cookbook/testing/integration/introduction)
 - [Bottom App Bar](https://proandroiddev.com/flutter-how-to-using-bottomappbar-75d53426f5af)
+- [Slivers for fancy scrolling](https://flutter.dev/docs/development/ui/advanced/slivers)
+- [Floating App Bar with Slivers](https://flutter.dev/docs/cookbook/lists/floating-app-bar)

@@ -38,7 +38,13 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
       extendBody: true,
       appBar: AppBar(
-        title: BoardResult(),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text("Dicer"),
+            BoardResult(),
+          ],
+        ),
       ),
       body: Center(
         child: DicesBoard(),

@@ -4,10 +4,14 @@ class FloatingModalBottomSheet extends StatelessWidget {
   const FloatingModalBottomSheet({
     Key key,
     this.child,
-    this.padding = const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 30.0),
+    this.color,
+    this.topBorderColor,
+    this.padding = const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
   }) : super(key: key);
 
   final Widget child;
+  final Color color;
+  final Color topBorderColor;
   final EdgeInsets padding;
 
   @override
@@ -20,6 +24,17 @@ class FloatingModalBottomSheet extends StatelessWidget {
         child: Padding(
           padding: padding,
           child: child,
+        ),
+        decoration: BoxDecoration(
+          color: color != null ? color : Theme.of(context).backgroundColor,
+          border: topBorderColor != null
+              ? topBorderColor
+              : Border(
+                  top: BorderSide(
+                    color: Theme.of(context).accentColor,
+                    width: 3,
+                  ),
+                ),
         ),
       ),
     );

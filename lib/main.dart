@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:floating_action_row/floating_action_row.dart';
 
 import 'dice.dart';
-import 'floating_modal_bottom_sheet.dart';
 import 'add_dice_form.dart';
+import 'utils/floating_modal_bottom_sheet.dart';
+import 'utils/dicer_colors.dart';
 import 'models/result_model.dart';
 import 'models/board_model.dart';
 import 'models/dice_model.dart';
@@ -17,9 +19,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Dicer',
+      title: 'DICER',
       theme: ThemeData(
         brightness: Brightness.dark,
+        primaryColor: DicerColors.palette.primaryColor,
+        backgroundColor: DicerColors.palette.backgroundColor,
+        dialogBackgroundColor: DicerColors.palette.dialogBackgroundColor,
+        accentColor: DicerColors.palette.accentColor,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: MultiProvider(
@@ -37,12 +43,13 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       extendBody: true,
       appBar: AppBar(
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text("Dicer"),
+            Text("DICER"),
             BoardResult(),
           ],
         ),
@@ -78,7 +85,6 @@ class BoardResult extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       "Σ ${Provider.of<ResultModel>(context).result}",
-      style: TextStyle(fontSize: 30),
     );
   }
 }
@@ -126,7 +132,7 @@ class RerollBoardButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionRow(
-      color: Colors.amber,
+      color: Theme.of(context).accentColor,
       axis: Axis.vertical,
       children: [
         FloatingActionRowButton(
@@ -143,7 +149,9 @@ class RerollBoardButton extends StatelessWidget {
             },
           ),
         ),
-        FloatingActionRowDivider(),
+        FloatingActionRowDivider(
+          width: 2,
+        ),
         FloatingActionRowButton(
           icon: Icon(Icons.autorenew),
           onTap: () => rerollAll(

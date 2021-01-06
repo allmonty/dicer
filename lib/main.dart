@@ -1,6 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:floating_action_row/floating_action_row.dart';
 
 import 'dice.dart';
@@ -12,6 +13,11 @@ import 'models/board_model.dart';
 import 'models/dice_model.dart';
 
 void main() {
+  LicenseRegistry.addLicense(() async* {
+    final license = await rootBundle.loadString('google_fonts/OFL.txt');
+    yield LicenseEntryWithLineBreaks(['google_fonts'], license);
+  });
+
   runApp(MyApp());
 }
 
@@ -46,10 +52,15 @@ class MyHomePage extends StatelessWidget {
       backgroundColor: Theme.of(context).backgroundColor,
       extendBody: true,
       appBar: AppBar(
+        toolbarHeight: 50,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text("DICER"),
+            Image(
+              image: AssetImage('assets/icon.png'),
+              height: 50,
+            ),
             BoardResult(),
           ],
         ),

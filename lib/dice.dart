@@ -31,13 +31,14 @@ class Dice extends StatelessWidget {
                   color: Theme.of(context).accentColor,
                   thickness: 3,
                 ),
-                FittedBox(
-                  fit: BoxFit.fitWidth,
-                  child: Text(
-                    '${result > 0 ? result : "-"}',
-                    style: TextStyle(
-                      fontFamily: GoogleFonts.revalia().fontFamily,
-                      fontSize: 72,
+                Expanded(
+                  child: FittedBox(
+                    fit: BoxFit.fitWidth,
+                    child: Text(
+                      '${result > 0 ? result : "-"}',
+                      style: TextStyle(
+                        fontFamily: GoogleFonts.revalia().fontFamily,
+                      ),
                     ),
                   ),
                 ),

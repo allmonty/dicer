@@ -1,8 +1,14 @@
-# Dicer
+<img src="assets/feature-image.png" width="61%">
 
 A simple app to roll dices.
 
 Made with Flutter using Provider state management.
+
+<p float="left">
+  <img src="assets/screenshot-1.png" width="20%">
+  <img src="assets/screenshot-2.png" width="20%">
+  <img src="assets/screenshot-3.png" width="20%">
+</p>
 
 ## Running
 

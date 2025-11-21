@@ -1,20 +1,16 @@
 import 'package:flutter/material.dart';
 
 class AddDiceForm extends StatefulWidget {
-  AddDiceForm({
-    Key key,
-    this.diceSize = 6,
-    this.quantity = 1,
-    this.add,
-  }) : super(key: key);
+  AddDiceForm({Key? key, this.diceSize, this.quantity, this.add})
+    : super(key: key);
 
-  final int diceSize;
-  final int quantity;
-  final Function add;
+  final int? diceSize;
+  final int? quantity;
+  final Function? add;
 
   @override
   _AddDiceFormState createState() =>
-      _AddDiceFormState(diceSize: diceSize, quantity: quantity);
+      _AddDiceFormState(diceSize: diceSize ?? 6, quantity: quantity ?? 1);
 }
 
 class _AddDiceFormState extends State<AddDiceForm> {
@@ -51,10 +47,12 @@ class _AddDiceFormState extends State<AddDiceForm> {
           ),
           keyboardType: TextInputType.number,
         ),
-        RaisedButton(
-          color: Theme.of(context).accentColor,
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            surfaceTintColor: Theme.of(context).colorScheme.secondary,
+          ),
           child: Icon(Icons.add),
-          onPressed: () => widget.add(diceSize, quantity: quantity),
+          onPressed: () => widget.add!(diceSize, quantity: quantity),
         ),
       ],
     );

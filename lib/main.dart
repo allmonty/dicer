@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:floating_action_row/floating_action_row.dart';
+// import 'package:floating_action_row/floating_action_row.dart';
 
 import 'dice.dart';
 import 'add_dice_form.dart';
@@ -27,12 +27,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'DICER',
       theme: ThemeData(
-        brightness: Brightness.dark,
         primaryColor: DicerColors.palette.primaryColor,
-        backgroundColor: DicerColors.palette.backgroundColor,
-        dialogBackgroundColor: DicerColors.palette.dialogBackgroundColor,
-        accentColor: DicerColors.palette.accentColor,
         visualDensity: VisualDensity.adaptivePlatformDensity,
+        colorScheme: ColorScheme.fromSwatch().copyWith(
+          secondary: DicerColors.palette.accentColor,
+        ),
+        dialogTheme: DialogThemeData(
+          backgroundColor: DicerColors.palette.dialogBackgroundColor,
+        ),
       ),
       home: MultiProvider(
         providers: [
@@ -49,7 +51,7 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
+      backgroundColor: Theme.of(context).colorScheme.background,
       extendBody: true,
       appBar: AppBar(
         toolbarHeight: 50,
@@ -57,18 +59,13 @@ class MyHomePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text("DICER"),
-            Image(
-              image: AssetImage('assets/icon.png'),
-              height: 50,
-            ),
+            Image(image: AssetImage('assets/icon.png'), height: 50),
             BoardResult(),
           ],
         ),
       ),
-      body: Center(
-        child: DicesBoard(),
-      ),
-      floatingActionButton: RerollBoardButton(),
+      body: Center(child: DicesBoard()),
+      // floatingActionButton: RerollBoardButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
@@ -94,9 +91,7 @@ void removeDice(DiceModel dice, BoardModel board, ResultModel result) {
 class BoardResult extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Text(
-      "Σ ${Provider.of<ResultModel>(context).result}",
-    );
+    return Text("Σ ${Provider.of<ResultModel>(context).result}");
   }
 }
 
@@ -112,24 +107,26 @@ class DicesBoard extends StatelessWidget {
             children: board.items.map((diceModel) {
               return ChangeNotifierProvider.value(
                 value: diceModel,
-                child: Consumer<DiceModel>(builder: (context, dice, _) {
-                  return FractionallySizedBox(
-                    widthFactor: 0.33,
-                    child: Dice(
-                      size: diceModel.size,
-                      result: diceModel.result,
-                      longPress: () => removeDice(
-                        dice,
-                        board,
-                        Provider.of<ResultModel>(context, listen: false),
+                child: Consumer<DiceModel>(
+                  builder: (context, dice, _) {
+                    return FractionallySizedBox(
+                      widthFactor: 0.33,
+                      child: Dice(
+                        size: diceModel.size,
+                        result: diceModel.result,
+                        longPress: () => removeDice(
+                          dice,
+                          board,
+                          Provider.of<ResultModel>(context, listen: false),
+                        ),
+                        onTap: () => reroll(
+                          diceModel,
+                          Provider.of<ResultModel>(context, listen: false),
+                        ),
                       ),
-                      onTap: () => reroll(
-                        diceModel,
-                        Provider.of<ResultModel>(context, listen: false),
-                      ),
-                    ),
-                  );
-                }),
+                    );
+                  },
+                ),
               );
             }).toList(),
           ),
@@ -139,38 +136,38 @@ class DicesBoard extends StatelessWidget {
   }
 }
 
-class RerollBoardButton extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return FloatingActionRow(
-      color: Theme.of(context).accentColor,
-      axis: Axis.vertical,
-      children: [
-        FloatingActionRowButton(
-          icon: Icon(Icons.add),
-          onTap: () => showModalBottomSheet(
-            context: context,
-            isScrollControlled: true,
-            builder: (_) {
-              return FloatingModalBottomSheet(
-                child: AddDiceForm(
-                  add: Provider.of<BoardModel>(context, listen: false).add,
-                ),
-              );
-            },
-          ),
-        ),
-        FloatingActionRowDivider(
-          width: 2,
-        ),
-        FloatingActionRowButton(
-          icon: Icon(Icons.autorenew),
-          onTap: () => rerollAll(
-            Provider.of<BoardModel>(context, listen: false),
-            Provider.of<ResultModel>(context, listen: false),
-          ),
-        ),
-      ],
-    );
-  }
-}
+// class RerollBoardButton extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return FloatingActionRow(
+//       color: Theme.of(context).accentColor,
+//       axis: Axis.vertical,
+//       children: [
+//         FloatingActionRowButton(
+//           icon: Icon(Icons.add),
+//           onTap: () => showModalBottomSheet(
+//             context: context,
+//             isScrollControlled: true,
+//             builder: (_) {
+//               return FloatingModalBottomSheet(
+//                 child: AddDiceForm(
+//                   add: Provider.of<BoardModel>(context, listen: false).add,
+//                 ),
+//               );
+//             },
+//           ),
+//         ),
+//         FloatingActionRowDivider(
+//           width: 2,
+//         ),
+//         FloatingActionRowButton(
+//           icon: Icon(Icons.autorenew),
+//           onTap: () => rerollAll(
+//             Provider.of<BoardModel>(context, listen: false),
+//             Provider.of<ResultModel>(context, listen: false),
+//           ),
+//         ),
+//       ],
+//     );
+//   }
+// }

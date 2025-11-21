@@ -4,20 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Dice extends StatelessWidget {
-  const Dice({Key key, this.size, this.result, this.onTap, this.longPress})
-      : super(key: key);
+  const Dice({Key? key, this.size, this.result, this.onTap, this.longPress})
+    : super(key: key);
 
-  final int size;
-  final int result;
-  final Function onTap;
-  final Function longPress;
+  final int? size;
+  final int? result;
+  final VoidCallback? onTap;
+  final VoidCallback? longPress;
 
   @override
   Widget build(BuildContext context) {
     return Card(
       color: Theme.of(context).dialogBackgroundColor,
       child: InkWell(
-        splashColor: Theme.of(context).accentColor,
+        splashColor: Theme.of(context).colorScheme.secondary,
         onTap: onTap,
         onLongPress: longPress,
         child: AspectRatio(
@@ -28,14 +28,14 @@ class Dice extends StatelessWidget {
               children: <Widget>[
                 Text('D$size'),
                 Divider(
-                  color: Theme.of(context).accentColor,
+                  color: Theme.of(context).colorScheme.secondary,
                   thickness: 3,
                 ),
                 Expanded(
                   child: FittedBox(
                     fit: BoxFit.fitWidth,
                     child: Text(
-                      '${result > 0 ? result : "-"}',
+                      '${result! > 0 ? result : "-"}',
                       style: TextStyle(
                         fontFamily: GoogleFonts.revalia().fontFamily,
                       ),

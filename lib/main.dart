@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-// import 'package:floating_action_row/floating_action_row.dart';
 
 import 'dice.dart';
 import 'add_dice_form.dart';
@@ -65,7 +64,7 @@ class MyHomePage extends StatelessWidget {
         ),
       ),
       body: Center(child: DicesBoard()),
-      // floatingActionButton: RerollBoardButton(),
+      floatingActionButton: RerollBoardButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
@@ -136,38 +135,33 @@ class DicesBoard extends StatelessWidget {
   }
 }
 
-// class RerollBoardButton extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return FloatingActionRow(
-//       color: Theme.of(context).accentColor,
-//       axis: Axis.vertical,
-//       children: [
-//         FloatingActionRowButton(
-//           icon: Icon(Icons.add),
-//           onTap: () => showModalBottomSheet(
-//             context: context,
-//             isScrollControlled: true,
-//             builder: (_) {
-//               return FloatingModalBottomSheet(
-//                 child: AddDiceForm(
-//                   add: Provider.of<BoardModel>(context, listen: false).add,
-//                 ),
-//               );
-//             },
-//           ),
-//         ),
-//         FloatingActionRowDivider(
-//           width: 2,
-//         ),
-//         FloatingActionRowButton(
-//           icon: Icon(Icons.autorenew),
-//           onTap: () => rerollAll(
-//             Provider.of<BoardModel>(context, listen: false),
-//             Provider.of<ResultModel>(context, listen: false),
-//           ),
-//         ),
-//       ],
-//     );
-//   }
-// }
+class RerollBoardButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: () => showModalBottomSheet(
+            context: context,
+            isScrollControlled: true,
+            builder: (_) {
+              return FloatingModalBottomSheet(
+                child: AddDiceForm(
+                  add: Provider.of<BoardModel>(context, listen: false).add,
+                ),
+              );
+            },
+          ),
+        ),
+        FloatingActionButton(
+          child: Icon(Icons.autorenew),
+          onPressed: () => rerollAll(
+            Provider.of<BoardModel>(context, listen: false),
+            Provider.of<ResultModel>(context, listen: false),
+          ),
+        ),
+      ],
+    );
+  }
+}

@@ -2,40 +2,28 @@ import 'package:flutter/material.dart';
 
 class FloatingModalBottomSheet extends StatelessWidget {
   const FloatingModalBottomSheet({
-    Key key,
+    super.key,
     this.child,
-    this.color,
+    this.backgroundColor,
     this.topBorderColor,
     this.padding = const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-  }) : super(key: key);
+  });
 
-  final Widget child;
-  final Color color;
-  final Color topBorderColor;
-  final EdgeInsets padding;
+  final Widget? child;
+  final Color? backgroundColor;
+  final Color? topBorderColor;
+  final EdgeInsetsGeometry padding;
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
-        padding: EdgeInsets.only(
-          bottom: MediaQuery.of(context).viewInsets.bottom,
-        ),
-        child: Padding(
-          padding: padding,
-          child: child,
-        ),
+        padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
         decoration: BoxDecoration(
-          color: color != null ? color : Theme.of(context).backgroundColor,
-          border: topBorderColor != null
-              ? topBorderColor
-              : Border(
-                  top: BorderSide(
-                    color: Theme.of(context).accentColor,
-                    width: 3,
-                  ),
-                ),
+          color: backgroundColor!,
+          border: Border(top: BorderSide(color: topBorderColor!, width: 3)),
         ),
+        child: Padding(padding: padding, child: child),
       ),
     );
   }

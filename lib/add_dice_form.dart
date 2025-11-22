@@ -1,20 +1,14 @@
 import 'package:flutter/material.dart';
 
 class AddDiceForm extends StatefulWidget {
-  AddDiceForm({
-    Key key,
-    this.diceSize = 6,
-    this.quantity = 1,
-    this.add,
-  }) : super(key: key);
+  const AddDiceForm({super.key, this.diceSize = 6, this.quantity = 1, this.add});
 
-  final int diceSize;
-  final int quantity;
-  final Function add;
+  final int? diceSize;
+  final int? quantity;
+  final Function? add;
 
   @override
-  _AddDiceFormState createState() =>
-      _AddDiceFormState(diceSize: diceSize, quantity: quantity);
+  _AddDiceFormState createState() => _AddDiceFormState(diceSize: diceSize!, quantity: quantity!);
 }
 
 class _AddDiceFormState extends State<AddDiceForm> {
@@ -34,10 +28,7 @@ class _AddDiceFormState extends State<AddDiceForm> {
           onChanged: (value) {
             setState(() => diceSize = int.parse(value));
           },
-          decoration: InputDecoration(
-            icon: Text("D"),
-            labelText: "Size of dice",
-          ),
+          decoration: InputDecoration(icon: Text("D"), labelText: "Size of dice"),
           keyboardType: TextInputType.number,
         ),
         TextFormField(
@@ -45,16 +36,17 @@ class _AddDiceFormState extends State<AddDiceForm> {
           onChanged: (value) {
             setState(() => quantity = int.parse(value));
           },
-          decoration: InputDecoration(
-            icon: Text("#"),
-            labelText: "Amount of dice",
-          ),
+          decoration: InputDecoration(icon: Text("#"), labelText: "Amount of dice"),
           keyboardType: TextInputType.number,
         ),
-        RaisedButton(
-          color: Theme.of(context).accentColor,
+        SizedBox(height: 25),
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            foregroundColor: Theme.of(context).colorScheme.primaryContainer,
+            backgroundColor: Theme.of(context).colorScheme.outline,
+          ),
           child: Icon(Icons.add),
-          onPressed: () => widget.add(diceSize, quantity: quantity),
+          onPressed: () => widget.add!(diceSize, quantity: quantity),
         ),
       ],
     );

@@ -1,5 +1,5 @@
 name: dicer
-description: A new Flutter project.
+description: Simple app to run dies.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
@@ -18,14 +18,13 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: '^3.10.0'
 
 dependencies:
   flutter:
     sdk: flutter
-  provider: ^4.0.0
-  floating_action_row: ^0.1.0
-  google_fonts: ^1.1.1
+  provider: ^6.1.5
+  google_fonts: ^6.3.2
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -35,7 +34,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons: "^0.8.0"
+  flutter_launcher_icons: ^0.14.0
+  flutter_lints: ^6.0.0
 
 flutter_icons:
   android: "launcher_icon"

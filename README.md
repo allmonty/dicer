@@ -1,6 +1,6 @@
 <img src="assets/feature-image.png" width="61%">
 
-A simple app to roll dices.
+# A simple app to roll dices.
 
 Made with Flutter using Provider state management.
 
@@ -10,10 +10,32 @@ Made with Flutter using Provider state management.
   <img src="assets/screenshot-3.png" width="20%">
 </p>
 
+## Project layout (high level)
+
+- lib/
+  - main.dart — app entry
+  - src/ — app modules (widgets, providers, models)
+- test/ — unit tests
+- assets/ — images and screenshots
+
+## Prerequisites
+
+- macOS (development machine)
+- Flutter SDK installed (see `flutter --version`)
+- For Android: Android Studio + AVD or a physical device
+- For iOS: Xcode and a valid development setup
+
+Run:
+- flutter doctor
+
 ## Running
 
-First, install flutter than run `flutter doctor` and fix possible errors.
+First, install flutter than run `flutter doctor` and fix possible errors. <br>
 To run the app simply run `flutter run`.
+
+### Android
+
+Before running the android emulator must be launched
 
 ## References
 
@@ -28,3 +50,7 @@ To run the app simply run `flutter run`.
 - [Slivers for fancy scrolling](https://flutter.dev/docs/development/ui/advanced/slivers)
 - [Prepare to release](https://flutter.dev/docs/deployment/android)
 - [Floating App Bar with Slivers](https://flutter.dev/docs/cookbook/lists/floating-app-bar)
+
+## License
+
+No part of this project may be used, copied, modified, or distributed without prior written permission from the owner.

@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 
 class AddDiceForm extends StatefulWidget {
-  AddDiceForm({Key? key, this.diceSize, this.quantity, this.add})
-    : super(key: key);
+  AddDiceForm({Key? key, this.diceSize = 6, this.quantity = 1, this.add}) : super(key: key);
 
   final int? diceSize;
   final int? quantity;
   final Function? add;
 
   @override
-  _AddDiceFormState createState() =>
-      _AddDiceFormState(diceSize: diceSize ?? 6, quantity: quantity ?? 1);
+  _AddDiceFormState createState() => _AddDiceFormState(diceSize: diceSize!, quantity: quantity!);
 }
 
 class _AddDiceFormState extends State<AddDiceForm> {
@@ -30,10 +28,7 @@ class _AddDiceFormState extends State<AddDiceForm> {
           onChanged: (value) {
             setState(() => diceSize = int.parse(value));
           },
-          decoration: InputDecoration(
-            icon: Text("D"),
-            labelText: "Size of dice",
-          ),
+          decoration: InputDecoration(icon: Text("D"), labelText: "Size of dice"),
           keyboardType: TextInputType.number,
         ),
         TextFormField(
@@ -41,15 +36,14 @@ class _AddDiceFormState extends State<AddDiceForm> {
           onChanged: (value) {
             setState(() => quantity = int.parse(value));
           },
-          decoration: InputDecoration(
-            icon: Text("#"),
-            labelText: "Amount of dice",
-          ),
+          decoration: InputDecoration(icon: Text("#"), labelText: "Amount of dice"),
           keyboardType: TextInputType.number,
         ),
+        SizedBox(height: 25),
         ElevatedButton(
           style: ElevatedButton.styleFrom(
-            surfaceTintColor: Theme.of(context).colorScheme.secondary,
+            foregroundColor: Theme.of(context).colorScheme.primaryContainer,
+            backgroundColor: Theme.of(context).colorScheme.outline,
           ),
           child: Icon(Icons.add),
           onPressed: () => widget.add!(diceSize, quantity: quantity),

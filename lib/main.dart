@@ -26,13 +26,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'DICER',
       theme: ThemeData(
-        primaryColor: DicerColors.palette.primaryColor,
         visualDensity: VisualDensity.adaptivePlatformDensity,
-        colorScheme: ColorScheme.fromSwatch().copyWith(
-          secondary: DicerColors.palette.accentColor,
-        ),
-        dialogTheme: DialogThemeData(
-          backgroundColor: DicerColors.palette.dialogBackgroundColor,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: DicerColors.palette.seedColor!,
+          outline: DicerColors.palette.outlineColor!,
+          brightness: Brightness.dark,
         ),
       ),
       home: MultiProvider(
@@ -50,22 +48,26 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       extendBody: true,
       appBar: AppBar(
-        toolbarHeight: 50,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text("DICER"),
-            Image(image: AssetImage('assets/icon.png'), height: 50),
-            BoardResult(),
-          ],
+        foregroundColor: Theme.of(context).colorScheme.primary,
+        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+        title: Container(
+          margin: EdgeInsets.only(bottom: 13, top: 10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text("DICER"),
+              Image(image: AssetImage('assets/icon.png'), height: 50),
+              BoardResult(),
+            ],
+          ),
         ),
+        shape: Border(bottom: BorderSide(color: Theme.of(context).colorScheme.outline, width: 3)),
       ),
       body: Center(child: DicesBoard()),
-      floatingActionButton: RerollBoardButton(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: BoardButtons(),
     );
   }
 }
@@ -96,7 +98,7 @@ class BoardResult extends StatelessWidget {
 
 class DicesBoard extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, {Key? key, Color? backgroundColor}) {
     return Consumer<BoardModel>(
       builder: (context, board, _) {
         return SingleChildScrollView(
@@ -113,15 +115,11 @@ class DicesBoard extends StatelessWidget {
                       child: Dice(
                         size: diceModel.size,
                         result: diceModel.result,
-                        longPress: () => removeDice(
-                          dice,
-                          board,
-                          Provider.of<ResultModel>(context, listen: false),
-                        ),
-                        onTap: () => reroll(
-                          diceModel,
-                          Provider.of<ResultModel>(context, listen: false),
-                        ),
+                        foregroundColor: Theme.of(context).colorScheme.primary,
+                        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+                        outlineColor: Theme.of(context).colorScheme.outline,
+                        longPress: () => removeDice(dice, board, Provider.of<ResultModel>(context, listen: false)),
+                        onTap: () => reroll(diceModel, Provider.of<ResultModel>(context, listen: false)),
                       ),
                     );
                   },
@@ -135,26 +133,33 @@ class DicesBoard extends StatelessWidget {
   }
 }
 
-class RerollBoardButton extends StatelessWidget {
+class BoardButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
       children: [
         FloatingActionButton(
           child: Icon(Icons.add),
+          foregroundColor: Theme.of(context).colorScheme.outline,
+          backgroundColor: Theme.of(context).colorScheme.primaryContainer,
           onPressed: () => showModalBottomSheet(
             context: context,
             isScrollControlled: true,
             builder: (_) {
               return FloatingModalBottomSheet(
-                child: AddDiceForm(
-                  add: Provider.of<BoardModel>(context, listen: false).add,
-                ),
+                backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+                topBorderColor: Theme.of(context).colorScheme.outline,
+                padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 20.0),
+                child: AddDiceForm(add: Provider.of<BoardModel>(context, listen: false).add),
               );
             },
           ),
         ),
+        SizedBox(width: 10),
         FloatingActionButton(
+          foregroundColor: Theme.of(context).colorScheme.outline,
+          backgroundColor: Theme.of(context).colorScheme.primaryContainer,
           child: Icon(Icons.autorenew),
           onPressed: () => rerollAll(
             Provider.of<BoardModel>(context, listen: false),

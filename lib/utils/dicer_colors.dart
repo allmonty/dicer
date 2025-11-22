@@ -1,27 +1,17 @@
 import 'package:flutter/material.dart';
 
 class Palette {
-  Palette(this.primaryColor, this.backgroundColor, this.dialogBackgroundColor,
-      this.accentColor);
+  Palette({this.seedColor, this.outlineColor});
 
-  Color primaryColor;
-  Color backgroundColor;
-  Color dialogBackgroundColor;
-  Color accentColor;
+  Color? seedColor;
+  Color? outlineColor;
 }
 
 class DicerColors {
-  static Palette palette = palette2;
-
-  // static Palette palette1 = Palette(
-  //     Color.fromRGBO(110, 27, 141, 1),
-  //     Color.fromRGBO(10, 23, 49, 1),
-  //     Color.fromRGBO(18, 60, 120, 1),
-  //     Color.fromRGBO(227, 1, 209, 1));
-
-  static Palette palette2 = Palette(
-      Color.fromRGBO(2, 85, 121, 1),
-      Color.fromRGBO(1, 2, 42, 1),
-      Color.fromRGBO(2, 85, 121, 1),
-      Color.fromRGBO(255, 40, 109, 1));
+  static Palette palette = Palette(
+    seedColor: Color.fromRGBO(2, 85, 121, 1),
+    // primaryContainerColor: Color.fromRGBO(1, 2, 42, 1),
+    outlineColor: Color.fromRGBO(255, 40, 109, 1),
+    // secondaryContainerColor: Color.fromRGBO(2, 85, 121, 1),
+  );
 }

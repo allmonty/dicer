@@ -16,6 +16,16 @@
             ]
         },
         {
+            "name": "Debug Android",
+            "type": "dart",
+            "request": "launch",
+            "program": "lib/main.dart",
+            "args": [
+                "-d",
+                "emulator-5554"
+            ]
+        },
+        {
             // To be used while measuring the app performance.
             "name": "Profile",
             "request": "launch",

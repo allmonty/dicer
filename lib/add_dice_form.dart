@@ -8,17 +8,20 @@ class AddDiceForm extends StatefulWidget {
   final Function? add;
 
   @override
-  _AddDiceFormState createState() => _AddDiceFormState(diceSize: diceSize!, quantity: quantity!);
+  AddDiceFormState createState() => AddDiceFormState();
 }
 
-class _AddDiceFormState extends State<AddDiceForm> {
-  _AddDiceFormState({this.diceSize = 6, this.quantity = 1});
+class AddDiceFormState extends State<AddDiceForm> {
+  AddDiceFormState();
 
-  int diceSize;
-  int quantity;
+  int? diceSize;
+  int? quantity;
 
   @override
   Widget build(BuildContext context) {
+    diceSize = widget.diceSize;
+    quantity = widget.quantity;
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.end,
@@ -26,7 +29,7 @@ class _AddDiceFormState extends State<AddDiceForm> {
         TextFormField(
           initialValue: '${widget.diceSize}',
           onChanged: (value) {
-            setState(() => diceSize = int.parse(value));
+            setState(() => diceSize = int.parse(value == "" ? "0" : value));
           },
           decoration: InputDecoration(icon: Text("D"), labelText: "Size of dice"),
           keyboardType: TextInputType.number,
@@ -34,7 +37,7 @@ class _AddDiceFormState extends State<AddDiceForm> {
         TextFormField(
           initialValue: '${widget.quantity}',
           onChanged: (value) {
-            setState(() => quantity = int.parse(value));
+            setState(() => quantity = int.parse(value == "" ? "0" : value));
           },
           decoration: InputDecoration(icon: Text("#"), labelText: "Amount of dice"),
           keyboardType: TextInputType.number,

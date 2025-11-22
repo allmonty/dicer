@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 class FloatingModalBottomSheet extends StatelessWidget {
@@ -18,7 +20,10 @@ class FloatingModalBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
-        padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewPadding.bottom),
+        // max between viewInsets.bottom and viewPadding.bottom
+        padding: EdgeInsets.only(
+          bottom: max(MediaQuery.of(context).viewInsets.bottom, MediaQuery.of(context).viewPadding.bottom),
+        ),
         decoration: BoxDecoration(
           color: backgroundColor!,
           border: Border(top: BorderSide(color: topBorderColor!, width: 3)),

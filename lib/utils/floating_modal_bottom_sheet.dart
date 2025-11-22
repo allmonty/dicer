@@ -18,7 +18,7 @@ class FloatingModalBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
-        padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+        padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewPadding.bottom),
         decoration: BoxDecoration(
           color: backgroundColor!,
           border: Border(top: BorderSide(color: topBorderColor!, width: 3)),

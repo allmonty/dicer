@@ -56,7 +56,7 @@ class MyHomePage extends StatelessWidget {
       extendBody: true,
       appBar: AppBar(
         foregroundColor: Theme.of(context).colorScheme.primary,
-        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         title: Container(
           margin: EdgeInsets.only(bottom: 13, top: 10),
           child: Row(
@@ -154,6 +154,10 @@ class BoardButtons extends StatelessWidget {
         FloatingActionButton(
           foregroundColor: Theme.of(context).colorScheme.outline,
           backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+          shape: RoundedRectangleBorder(
+            side: BorderSide(color: Theme.of(context).colorScheme.outline, width: 1),
+            borderRadius: BorderRadius.circular(12),
+          ),
           onPressed: () => showModalBottomSheet(
             context: context,
             isScrollControlled: true,
@@ -172,6 +176,10 @@ class BoardButtons extends StatelessWidget {
         FloatingActionButton(
           foregroundColor: Theme.of(context).colorScheme.outline,
           backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+          shape: RoundedRectangleBorder(
+            side: BorderSide(color: Theme.of(context).colorScheme.outline, width: 1),
+            borderRadius: BorderRadius.circular(12),
+          ),
           child: Icon(Icons.autorenew),
           onPressed: () => rerollAll(
             Provider.of<BoardModel>(context, listen: false),

@@ -27,10 +27,15 @@ class Dice extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: backgroundColor,
+      shape: RoundedRectangleBorder(
+        side: BorderSide(color: outlineColor!, width: 1),
+        borderRadius: BorderRadius.circular(12),
+      ),
       child: InkWell(
         splashColor: foregroundColor,
         onTap: onTap,
         onLongPress: longPress,
+        borderRadius: BorderRadius.circular(12),
         child: AspectRatio(
           aspectRatio: 1,
           child: Container(

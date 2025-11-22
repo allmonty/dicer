@@ -42,8 +42,12 @@ class _AddDiceFormState extends State<AddDiceForm> {
         SizedBox(height: 25),
         ElevatedButton(
           style: ElevatedButton.styleFrom(
-            foregroundColor: Theme.of(context).colorScheme.primaryContainer,
-            backgroundColor: Theme.of(context).colorScheme.outline,
+            foregroundColor: Theme.of(context).colorScheme.outline,
+            backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+            shape: RoundedRectangleBorder(
+              side: BorderSide(color: Theme.of(context).colorScheme.outline, width: 1),
+              borderRadius: BorderRadius.circular(12),
+            ),
           ),
           child: Icon(Icons.add),
           onPressed: () => widget.add!(diceSize, quantity: quantity),

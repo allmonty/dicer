@@ -18,10 +18,14 @@ class AddDiceFormState extends State<AddDiceForm> {
   int? quantity;
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
     diceSize = widget.diceSize;
     quantity = widget.quantity;
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.end,

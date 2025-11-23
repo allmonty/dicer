@@ -37,6 +37,26 @@ To run the app simply run `flutter run`.
 
 Before running the android emulator must be launched
 
+## Building for release
+
+### Ads
+
+Replace the placeholder AdMob IDs with your own from the AdMob console:
+
+- Update `lib/utils/ad_helper.dart`:
+  - replace any placeholder ad unit IDs with your production ad unit IDs (banner, interstitial, rewarded, etc.).
+- Update Android manifest `android/app/src/main/AndroidManifest.xml`:
+  - replace the placeholder Android app ID(s) with your AdMob Android App ID(s).
+- Exact placeholders to replace (examples from this repo):
+  - <admob-android-unit-id>
+  - <admob-android-app-id>
+
+Notes:
+- IOS not yet implemented.
+- Use AdMob test IDs while developing and replace them with your real IDs only for release builds.
+- Ad unit IDs typically look like ca-app-pub-XXXXXXXXXXXXXXXX/NNNNNNNNNN, app IDs like ca-app-pub-XXXXXXXXXXXXXXXX~NNNNNNNNNN.
+- After replacing IDs, run a clean build (for example: flutter clean && flutter build apk or flutter build ios) and test in release/profile modes to verify ads load.
+
 ## References
 
 - [Flutter Online Documentation](https://flutter.dev/docs)

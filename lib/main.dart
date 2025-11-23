@@ -1,17 +1,24 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 
 import 'dice.dart';
 import 'add_dice_form.dart';
-import 'utils/floating_modal_bottom_sheet.dart';
+import 'utils/ad_helper.dart';
 import 'utils/dicer_colors.dart';
+import 'utils/floating_modal_bottom_sheet.dart';
 import 'models/result_model.dart';
 import 'models/board_model.dart';
 import 'models/dice_model.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  unawaited(MobileAds.instance.initialize());
+
   LicenseRegistry.addLicense(() async* {
     final license = await rootBundle.loadString('google_fonts/OFL.txt');
     yield LicenseEntryWithLineBreaks(['google_fonts'], license);
@@ -46,8 +53,23 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  _MyHomePageState();
+
+  final InterstitialAddDiceAd _interstitialAddDiceAd = InterstitialAddDiceAd();
+
+  @override
+  void initState() {
+    super.initState();
+    _interstitialAddDiceAd.loadAd();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +93,7 @@ class MyHomePage extends StatelessWidget {
         shape: Border(bottom: BorderSide(color: Theme.of(context).colorScheme.outline, width: 3)),
       ),
       body: Center(child: DicesBoard()),
-      floatingActionButton: BoardButtons(),
+      floatingActionButton: BoardButtons(showAd: _interstitialAddDiceAd.showAd),
     );
   }
 }
@@ -144,7 +166,9 @@ class DicesBoard extends StatelessWidget {
 }
 
 class BoardButtons extends StatelessWidget {
-  const BoardButtons({super.key});
+  const BoardButtons({super.key, this.showAd});
+
+  final Function()? showAd;
 
   @override
   Widget build(BuildContext context) {
@@ -162,6 +186,7 @@ class BoardButtons extends StatelessWidget {
             context: context,
             isScrollControlled: true,
             builder: (_) {
+              showAd!();
               return FloatingModalBottomSheet(
                 backgroundColor: Theme.of(context).colorScheme.primaryContainer,
                 topBorderColor: Theme.of(context).colorScheme.outline,
@@ -188,5 +213,49 @@ class BoardButtons extends StatelessWidget {
         ),
       ],
     );
+  }
+}
+
+class InterstitialAddDiceAd {
+  InterstitialAd? _interstitialAd;
+
+  void loadAd() {
+    InterstitialAd.load(
+      adUnitId: AdHelper.interstitialNewDiceAdUnitId,
+      request: const AdRequest(),
+      adLoadCallback: InterstitialAdLoadCallback(
+        onAdLoaded: (InterstitialAd ad) {
+          // print('$ad loaded');
+          _interstitialAd = ad;
+          _interstitialAd!.setImmersiveMode(true);
+        },
+        onAdFailedToLoad: (LoadAdError error) {
+          // print('InterstitialAd failed to load: $error.');
+          _interstitialAd = null;
+        },
+      ),
+    );
+  }
+
+  void showAd() {
+    if (_interstitialAd == null) {
+      // print('Warning: attempt to show interstitial before loaded.');
+      return;
+    }
+    _interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
+      // onAdShowedFullScreenContent: (InterstitialAd ad) => print('ad onAdShowedFullScreenContent.'),
+      onAdDismissedFullScreenContent: (InterstitialAd ad) {
+        // print('$ad onAdDismissedFullScreenContent.');
+        ad.dispose();
+        loadAd();
+      },
+      onAdFailedToShowFullScreenContent: (InterstitialAd ad, AdError error) {
+        // print('$ad onAdFailedToShowFullScreenContent: $error');
+        ad.dispose();
+        loadAd();
+      },
+    );
+    _interstitialAd!.show();
+    _interstitialAd = null;
   }
 }

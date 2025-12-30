@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
 class AddDiceForm extends StatefulWidget {
-  const AddDiceForm({super.key, this.diceSize = 6, this.quantity = 1, this.add});
+  const AddDiceForm({super.key, this.diceSize = 6, this.quantity = 1, this.addDice, this.showAdds});
 
   final int? diceSize;
   final int? quantity;
-  final Function? add;
+  final Function? addDice;
+  final Function()? showAdds;
 
   @override
   AddDiceFormState createState() => AddDiceFormState();
@@ -57,7 +58,10 @@ class AddDiceFormState extends State<AddDiceForm> {
             ),
           ),
           child: Icon(Icons.add),
-          onPressed: () => widget.add!(diceSize, quantity: quantity),
+          onPressed: () {
+            widget.showAdds?.call();
+            widget.addDice!(diceSize, quantity: quantity);
+          },
         ),
       ],
     );

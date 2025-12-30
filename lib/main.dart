@@ -186,12 +186,14 @@ class BoardButtons extends StatelessWidget {
             context: context,
             isScrollControlled: true,
             builder: (_) {
-              showAd!();
               return FloatingModalBottomSheet(
                 backgroundColor: Theme.of(context).colorScheme.primaryContainer,
                 topBorderColor: Theme.of(context).colorScheme.outline,
                 padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 20.0),
-                child: AddDiceForm(add: Provider.of<BoardModel>(context, listen: false).add),
+                child: AddDiceForm(
+                  addDice: Provider.of<BoardModel>(context, listen: false).add,
+                  showAdds: showAd!,
+                ),
               );
             },
           ),
